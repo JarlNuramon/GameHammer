@@ -1,0 +1,55 @@
+.counter ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+.left .counter li {
+  float: left;
+}
+.right .counter li {
+  float: right;
+}
+.counter li {
+  padding: 5px;
+}
+.name {
+  font-size: 8vw !important;
+  font-weight: bolder !important;
+}
+.value {
+  font-size: 8vw !important;
+  font-weight: bolder !important;
+}
+.plus .btn,
+.minus .btn {
+  outline: none;
+  border: 0px;
+  box-sizing: none;
+  background-color: transparent;
+}
+.plus .btn {
+  color: green;
+  font-size: 8vw;
+  font-weight: bolder;
+}
+.minus .btn {
+  color: red;
+  font-size: 8vw;
+  font-weight: bolder;
+}
+.player {
+  margin: 1vw;
+  padding: 1vw;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}

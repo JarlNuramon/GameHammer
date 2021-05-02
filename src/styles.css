@@ -1,0 +1,166 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.menu ul {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+.menu li {
+  color: black !important;
+  background-color: grey;
+  margin: 0px 1px 10px 0px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+}
+.menu li a {
+  color: #f0f9ff !important;
+}
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.footer {
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  padding: 15px;
+}
+
+.carusel {
+  border-radius: 4px;
+  max-width: 80%;
+  max-height: 20%;
+}
+.carousel {
+  /* make sure your .items will get correct height */
+  height: 100%;
+}
+
+.carousel-item {
+  background-size: cover;
+  background-position: 50% 50%;
+  width: 100%;
+  min-height: 250px;
+  max-height: 250px;
+}
+.carousel-item img {
+  width: 100%;
+  -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
+  filter: blur(1px);
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.mainDiv {
+  margin: 2vh 2vw 2vh 2vw;
+}
+.login {
+  width: 100%;
+  margin: auto;
+}
+
+[class*="col-"] {
+  float: left;
+  max-width: 100%;
+  padding: 15px;
+}
+@media screen and (max-width: 600px) {
+  div.menu {
+    display: none;
+  }
+}
+.header a {
+  text-decoration: none;
+  color: #f0f9ff !important;
+}
+
+.header li:hover {
+  background-color: var(--highlight);
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+  .colu-s-0 {
+    width: 0%;
+  }
+  .colu-s-1 {
+    width: 8.33%;
+  }
+  .colu-s-2 {
+    width: 16.66%;
+  }
+  .colu-s-3 {
+    width: 25%;
+  }
+  .colu-s-4 {
+    width: 33.33%;
+  }
+  .colu-s-5 {
+    width: 41.66%;
+  }
+  .colu-s-6 {
+    width: 50%;
+  }
+  .colu-s-7 {
+    width: 58.33%;
+  }
+  .colu-s-8 {
+    width: 66.66%;
+  }
+  .colu-s-9 {
+    width: 75%;
+  }
+  .colu-s-10 {
+    width: 83.33%;
+  }
+  .colu-s-11 {
+    width: 91.66%;
+  }
+  .colu-s-12 {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .colu-1 {
+    width: 8.33%;
+  }
+  .colu-2 {
+    width: 16.66%;
+  }
+  .colu-3 {
+    width: 25%;
+  }
+  .colu-4 {
+    width: 33.33%;
+  }
+  .colu-5 {
+    width: 41.66%;
+  }
+  .colu-6 {
+    width: 50%;
+  }
+  .colu-7 {
+    width: 58.33%;
+  }
+  .colu-8 {
+    width: 66.66%;
+  }
+  .colu-9 {
+    width: 75%;
+  }
+  .colu-10 {
+    width: 83.33%;
+  }
+  .colu-11 {
+    width: 91.66%;
+  }
+  .colu-12 {
+    width: 100%;
+  }
+}
