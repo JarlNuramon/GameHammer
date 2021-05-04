@@ -8,7 +8,7 @@ export default function Login() {
   let history = useHistory();
   return (
     <div className="row">
-      <div className="colu-5 colu-s-10 login">
+      <div className="colu-5 colu-s-12 login">
         <Jumbotron>
           <Form>
             <Form.Group controlId="formBasicEmail">
@@ -22,9 +22,8 @@ export default function Login() {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
             </Form.Group>
-
             <Button variant="primary" onClick={() => submit(history)}>
-              Submit
+              Login
             </Button>
           </Form>
         </Jumbotron>
