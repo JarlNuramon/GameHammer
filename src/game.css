@@ -68,7 +68,7 @@
 .gameTurn .btn {
   color: black;
   border-radius: 18px;
-  margin: 6px;
+  margin: 5px;
   font-size: 3vw;
   background-color: red;
 }
@@ -82,7 +82,7 @@
 .gameTurn .btn:disabled {
   color: black;
   border-radius: 18px;
-  margin: 6px;
+  margin: 5px;
   font-size: 3vw;
   opacity: 0.8;
   background-color: rgb(92, 23, 23) !important;

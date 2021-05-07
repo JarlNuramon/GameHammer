@@ -18,6 +18,25 @@ body {
 .menu li a {
   color: #f0f9ff !important;
 }
+.buttonrow ul {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+
+  overflow: hidden;
+}
+.buttonrow li {
+  color: black !important;
+  background-color: grey;
+  margin: 0px 1px 10px 0px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  float: left;
+}
+.buttonrow li a {
+  display: block;
+  color: #f0f9ff !important;
+}
 .menu {
   padding-top: 5px;
 }
@@ -95,6 +114,9 @@ body {
 }
 
 @media only screen and (min-width: 700px) and (max-width: 768px) {
+  div.buttonrow {
+    display: none !important;
+  }
   .colu-s-0 {
     width: 0%;
   }
@@ -136,7 +158,9 @@ body {
   }
 }
 @media only screen and (min-width: 768px) {
-  /* For desktop: */
+  div.buttonrow {
+    display: none !important;
+  }
   .colu-1 {
     width: 8.33%;
   }
