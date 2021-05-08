@@ -41,20 +41,30 @@
   font-weight: bolder;
 }
 .player {
-  margin: 1vw;
-  padding: 1vw;
-  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 1vh;
+  padding-right: 5vw;
+  padding-left: 5vw;
   width: 100%;
 }
 
 .left {
   float: left;
+  text-align: left;
 }
 
 .right {
+  text-align: right;
   float: right;
 }
 
+.gameTurn {
+  text-align: center;
+}
+.Phase {
+  font-size: 10vw;
+  text-align: center;
+}
 .gameTurn .btn {
   color: black;
   border-radius: 18px;

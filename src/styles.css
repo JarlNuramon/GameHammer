@@ -1,4 +1,3 @@
-html,
 body {
   height: 100%;
   width: 100%;
@@ -18,6 +17,28 @@ body {
 }
 .menu li a {
   color: #f0f9ff !important;
+}
+.buttonrow ul {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+
+  overflow: hidden;
+}
+.buttonrow li {
+  color: black !important;
+  background-color: grey;
+  margin: 0px 1px 10px 0px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  float: left;
+}
+.buttonrow li a {
+  display: block;
+  color: #f0f9ff !important;
+}
+.menu {
+  padding-top: 5px;
 }
 .App {
   font-family: sans-serif;
@@ -57,6 +78,11 @@ body {
   clear: both;
   display: table;
 }
+.row {
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
+}
 .mainDiv {
   margin: 2vh 2vw 2vh 2vw;
 }
@@ -66,13 +92,16 @@ body {
 }
 
 [class*="col-"] {
-  float: left;
-  max-width: 100%;
   padding: 15px;
+  display: grid;
+  justify-content: center;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   div.menu {
     display: none;
+  }
+  .row {
+    display: inline-block;
   }
 }
 .header a {
@@ -84,7 +113,10 @@ body {
   background-color: var(--highlight);
 }
 
-@media only screen and (min-width: 600px) and (max-width: 768px) {
+@media only screen and (min-width: 700px) and (max-width: 768px) {
+  div.buttonrow {
+    display: none !important;
+  }
   .colu-s-0 {
     width: 0%;
   }
@@ -126,7 +158,9 @@ body {
   }
 }
 @media only screen and (min-width: 768px) {
-  /* For desktop: */
+  div.buttonrow {
+    display: none !important;
+  }
   .colu-1 {
     width: 8.33%;
   }

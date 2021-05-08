@@ -14,12 +14,10 @@ export default function GameTurn(props) {
   const handleClick = () => setLoading(true);
   return (
     <div className="gameTurn">
-      <center>
-        <h1>{props.phase}</h1>
-        <Button disabled={isLoading} onClick={!isLoading ? handleClick : null}>
-          {isLoading ? "Loading…" : "Next phase"}
-        </Button>
-      </center>
+      <div className="Phase">{props.phase}</div>
+      <Button disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+        {isLoading ? "Loading…" : "Next phase"}
+      </Button>
     </div>
   );
 }

@@ -8,17 +8,10 @@ export default function GameView() {
   return (
     <div>
       <div className="row">
-        <div className="colu-5 colu-s-5">
+        <div className="colu-6 colu-s-6">
           <PlayerComponent name="player1" side="left" />
         </div>
-        <div className="colu-2 colu-s-2">
-          <h2>
-            <center>
-              <h2>vs</h2>
-            </center>
-          </h2>
-        </div>
-        <div className="colu-5 colu-s-5">
+        <div className="colu-6 colu-s-6">
           <PlayerComponent name="player2" side="right" />
         </div>
       </div>
