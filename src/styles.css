@@ -87,6 +87,7 @@ body {
   margin: 2vh 2vw 2vh 2vw;
 }
 .login {
+  padding-top: 1vh;
   width: 100%;
   margin: auto;
 }

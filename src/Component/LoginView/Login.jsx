@@ -82,7 +82,7 @@ export default class Login extends Component {
   };
   
   render() {
-    if(this.state.login) return(<div className="row">
+    if(this.state.login) return(<div className="login row">
         <div className="colu-5 colu-s-12 login">
           <Jumbotron>
             <Form onSubmit={this.handleLogin.bind()}>
@@ -106,7 +106,7 @@ export default class Login extends Component {
           </Jumbotron>
         </div>
       </div>);
-    else return (<div className="row">
+    else return (<div className="login row">
           <div className="colu-5 colu-s-12 login">
             <Jumbotron>
               <Form onSubmit={this.handleSubmit.bind()}>
