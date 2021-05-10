@@ -46,7 +46,7 @@ export default class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.password != this.state.matchingPassword) {
+    if (this.state.password !== this.state.matchingPassword) {
       alert("Passwords are not Matching.")
     } else {
       fetch('http://localhost:8080/api/v1/user/register', {
