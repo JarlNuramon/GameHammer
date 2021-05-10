@@ -22,9 +22,7 @@ function App() {
         <Route path="/dashboard/:id" children={<Dashboard />}></Route>
         <Route path="/dashboard" children={<Dashboard />}></Route>
         <Route path="/game/:id/:gameid" children={<GameView />} />
-        <Route path="/login">
-          <Login />
-        </Route>
+        <Route path="/login" children={<Login />} />
         <Route path="/home">
           <Home />
         </Route>
