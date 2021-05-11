@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Jumbotron, Form, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import cookie from "react-cookies";
 class Login extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
@@ -17,7 +18,6 @@ class Login extends Component {
     matchingPassword: ""
   };
   handleLogin = (event) => {
-    console.log(this.state);
     event.preventDefault();
     fetch("http://localhost:8080/api/v1/authenticate/authenticate", {
       body: JSON.stringify({
@@ -37,6 +37,7 @@ class Login extends Component {
       })
       .then((myJson) => {
         this.props.history.push("/dashboard/" + this.state.username);
+        cookie.save("token", myJson.token, { path: "/" });
         console.log(myJson);
       })
       .catch(function (error) {
@@ -90,7 +91,10 @@ class Login extends Component {
         <div className="login row">
           <div className="colu-5 colu-s-12 login">
             <Jumbotron>
-              <Form onSubmit={this.handleLogin.bind()} onChange={this.handleChange}>
+              <Form
+                onSubmit={this.handleLogin.bind()}
+                onChange={this.handleChange}
+              >
                 <Form.Group controlId="formBasicUserName">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
@@ -130,7 +134,10 @@ class Login extends Component {
         <div className="login row">
           <div className="colu-5 colu-s-12 login">
             <Jumbotron>
-              <Form onSubmit={this.handleSubmit.bind()} onChange={this.handleChange}>
+              <Form
+                onSubmit={this.handleSubmit.bind()}
+                onChange={this.handleChange}
+              >
                 <Form.Group controlId="formBasicFirstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control

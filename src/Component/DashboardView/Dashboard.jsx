@@ -1,25 +1,72 @@
 import Sidewinder from "./Sidewinder";
 import GameTable from "./GameTable";
+import { Component } from "react";
 import ButtonRow from "./ButtonRow";
-import { useParams, Redirect } from "react-router-dom";
+import cookie from "react-cookies";
+import PropTypes from "prop-types";
+import { Redirect, withRouter } from "react-router-dom";
 
-export default function Header() {
-  let { id } = useParams();
-  if (id)
-    return (
-      <div>
-        <div className="row">
-          <div className="colu-2 colu-s-4">
-            <Sidewinder />
+import ReactLoading from "react-loading";
+class Dashboard extends Component {
+  state = {
+    loading: true
+  };
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+  componentDidMount() {
+    console.log(this.token, "and", this.id);
+    fetch("http://localhost:8080/api/v1/authenticate/dev/" + this.token, {
+      method: "GET",
+      mode: "cors"
+    })
+      .then(function (response) {
+        console.log(response);
+        if (response.ok) return response;
+        // parses json
+        alert("Token validation failed");
+        throw "Token was not valid";
+      })
+      .then((name) => {
+        this.setState({ loading: false });
+      })
+      .catch((e) => {
+        console.log(e);
+        this.props.history.push("/login");
+      });
+  }
+
+  render() {
+    this.token = cookie.load("token");
+    this.id = this.props.match.params.id;
+    if (this.id && this.token)
+      if (this.state.loading)
+        return (
+          <ReactLoading
+            type={"balls"}
+            color={"#black"}
+            height={667}
+            width={375}
+          />
+        );
+      else
+        return (
+          <div>
+            <div className="row">
+              <div className="colu-2 colu-s-4">
+                <Sidewinder />
+              </div>
+              <div className="colu-6 colu-s-6">
+                <GameTable />
+              </div>
+            </div>
+            <div className="row">
+              <ButtonRow />
+            </div>
           </div>
-          <div className="colu-6 colu-s-6">
-            <GameTable />
-          </div>
-        </div>
-        <div className="row">
-          <ButtonRow />
-        </div>
-      </div>
-    );
-  else return <Redirect to={{ pathname: "/login" }} />;
+        );
+    else return <Redirect to={{ pathname: "/login" }} />;
+  }
 }
+export default withRouter(Dashboard);
