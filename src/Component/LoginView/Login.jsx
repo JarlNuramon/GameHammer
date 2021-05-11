@@ -80,23 +80,25 @@ class Login extends Component {
     }
   };
 
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     if (this.state.login)
       return (
         <div className="login row">
           <div className="colu-5 colu-s-12 login">
             <Jumbotron>
-              <Form onSubmit={this.handleLogin.bind()}>
+              <Form onSubmit={this.handleLogin.bind()} onChange={this.handleChange}>
                 <Form.Group controlId="formBasicUserName">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
                     required
                     type="text"
+                    name="username"
                     placeholder="Enter user name"
                     value={this.state.username}
-                    onChange={(e) =>
-                      this.setState({ username: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
@@ -104,11 +106,9 @@ class Login extends Component {
                   <Form.Control
                     required
                     type="password"
+                    name="password"
                     placeholder="Password"
                     value={this.state.password}
-                    onChange={(e) =>
-                      this.setState({ password: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Button variant="primary" type="submit">
@@ -130,17 +130,15 @@ class Login extends Component {
         <div className="login row">
           <div className="colu-5 colu-s-12 login">
             <Jumbotron>
-              <Form onSubmit={this.handleSubmit.bind()}>
+              <Form onSubmit={this.handleSubmit.bind()} onChange={this.handleChange}>
                 <Form.Group controlId="formBasicFirstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     required
                     type="text"
+                    name="firstName"
                     placeholder="Enter First Name"
                     value={this.state.firstName}
-                    onChange={(e) =>
-                      this.setState({ firstName: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicLastName">
@@ -148,22 +146,19 @@ class Login extends Component {
                   <Form.Control
                     required
                     type="text"
+                    name="lastName"
                     placeholder="Enter Last Name"
                     value={this.state.lastName}
-                    onChange={(e) =>
-                      this.setState({ lastName: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicUserName">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
+                    required
                     type="text"
+                    name="username"
                     placeholder="Enter user name"
                     value={this.state.username}
-                    onChange={(e) =>
-                      this.setState({ username: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicEmail">
@@ -171,9 +166,9 @@ class Login extends Component {
                   <Form.Control
                     required
                     type="email"
+                    name="email"
                     placeholder="Enter email"
                     value={this.state.email}
-                    onChange={(e) => this.setState({ email: e.target.value })}
                   />
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
@@ -184,11 +179,9 @@ class Login extends Component {
                   <Form.Control
                     required
                     type="password"
+                    name="password"
                     placeholder="Password"
                     value={this.state.password}
-                    onChange={(e) =>
-                      this.setState({ password: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group controlId="formBasicMatchingPassword">
@@ -196,11 +189,9 @@ class Login extends Component {
                   <Form.Control
                     required
                     type="password"
+                    name="matchingPassword"
                     placeholder="Confirm Password"
                     value={this.state.matchingPassword}
-                    onChange={(e) =>
-                      this.setState({ matchingPassword: e.target.value })
-                    }
                   />
                 </Form.Group>
                 <Form.Group>
