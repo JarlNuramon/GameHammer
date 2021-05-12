@@ -85,6 +85,10 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  changeForm = () => {
+    this.setState({ login: !this.state.login })
+  }
+
   render() {
     if (this.state.login)
       return (
@@ -120,7 +124,7 @@ class Login extends Component {
                 </Button>
                 <p className="text-right">
                   Create Account{" "}
-                  <a href="#" onClick={() => this.setState({ login: false })}>
+                  <a href="#" onClick={this.changeForm}>
                     sign up?
                   </a>
                 </p>
@@ -207,7 +211,7 @@ class Login extends Component {
                   </Button>
                   <p className="text-right">
                     Already registered{" "}
-                    <a href="#" onClick={() => this.setState({ login: true })}>
+                    <a href="#" onClick={this.changeForm}>
                       sign in?
                     </a>
                   </p>
