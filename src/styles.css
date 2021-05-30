@@ -79,7 +79,6 @@ body {
   width: 100%;
   overflow: hidden;
   margin: auto;
-  align-items: center;
 }
 .mainDiv {
   margin: 2vh 2vw 2vh 2vw;
@@ -164,7 +163,7 @@ body {
     align-self: center;
   }
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
   div.buttonrow {
     display: none !important;
   }

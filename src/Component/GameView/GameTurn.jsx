@@ -2,7 +2,6 @@ import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 export default function GameTurn(props) {
   const [isLoading, setLoading] = useState(false);
-  const [getPhase, setPhase] = useState(props.phase);
   const map = {
     1: "Command",
     2: "Psychic",

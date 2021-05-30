@@ -9,7 +9,7 @@ import Header from "./Component/Header";
 import Footer from "./Component/Footer";
 import Dashboard from "./Component/DashboardView/Dashboard";
 import Login from "./Component/LoginView/Login";
-import GameView from "./Component/GameView/GameView";
+import GameContainer from "./Component/GameView/GameView";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -21,7 +21,7 @@ function App() {
       <Switch>
         <Route path="/dashboard/:id" children={<Dashboard />}></Route>
         <Route path="/dashboard" children={<Dashboard />}></Route>
-        <Route path="/game/:id/:gameid" children={<GameView />} />
+        <Route path="/game/:id/:gameid" children={<GameContainer />} />
         <Route path="/login" children={<Login />} />
         <Route path="/home">
           <Home />

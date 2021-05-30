@@ -24,13 +24,18 @@ class Dashboard extends Component {
       })
         .then(function (response) {
           console.log(response);
-          if (response.ok) return response;
-          // parses json
+          if (response.ok) return response.text();
           alert("Token validation failed");
           throw "Token was not valid";
         })
         .then((name) => {
-          this.setState({ loading: false });
+          console.log(name);
+          if (name === this.id) this.setState({ loading: false });
+          else {
+            alert("You are not the user for this dashboard");
+            this.props.history.push("/dashboard/" + name);
+            this.setState({ loading: false });
+          }
         })
         .catch((e) => {
           console.log(e);
@@ -61,7 +66,7 @@ class Dashboard extends Component {
               <div className="colu-2 colu-s-4">
                 <Sidewinder />
               </div>
-              <div className="colu-6 colu-s-6">
+              <div className="colu-10 colu-s-8">
                 <GameTable />
               </div>
             </div>

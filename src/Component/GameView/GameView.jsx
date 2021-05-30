@@ -2,16 +2,103 @@ import { useParams } from "react-router-dom";
 import PlayerComponent from "./PlayerComponent";
 import GameTurn from "./GameTurn";
 import cookie from "react-cookies";
-import { useState, useEffect } from "react";
-export default function GameView() {
+import ReactLoading from "react-loading";
+import PropTypes from "prop-types";
+import { Component, useState } from "react";
+import { withRouter } from "react-router-dom";
+class GameContainer extends Component {
+  state = {
+    loading: true,
+    match: null
+  };
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+  getMatch() {
+    fetch(
+      "http://localhost:8080/api/v1/match/" +
+        this.gid +
+        "?apiToken=" +
+        this.token,
+      {
+        method: "GET",
+        mode: "cors"
+      }
+    )
+      .then(function (response) {
+        console.log(response);
+        if (response.ok) return response.json();
+        alert("Token validation failed");
+        throw "Token was not valid";
+      })
+      .then((json) => {
+        console.log(json);
+
+        this.setState({ loading: false, match: json });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+  componentDidMount() {
+    console.log(this.token, "and", this.id);
+    if (this.id && this.token)
+      fetch("http://localhost:8080/api/v1/authenticate/dev/" + this.token, {
+        method: "GET",
+        mode: "cors"
+      })
+        .then(function (response) {
+          console.log(response);
+          if (response.ok) return response.text();
+          alert("Token validation failed");
+          throw "Token was not valid";
+        })
+        .then((name) => {
+          console.log(name);
+          if (name === this.id) return this.getMatch();
+          else {
+            alert("You are not the user for this dashboard");
+            this.props.history.push("/dashboard/" + name);
+            this.setState({ loading: false });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.props.history.push("/login");
+        });
+  }
+
+  render() {
+    this.token = cookie.load("token");
+    this.id = this.props.match.params.id;
+    this.gid = this.props.match.params.gameid;
+    if (this.id && this.token)
+      if (this.state.loading)
+        return (
+          <center>
+            <ReactLoading
+              type={"balls"}
+              color={"#black"}
+              height={667}
+              width={375}
+            />
+            shooting through Orks to reach dashboard.
+          </center>
+        );
+      else return <GameView match={this.state.match} />;
+  }
+}
+
+function GameView(props) {
   let { id, gameid } = useParams();
   console.log("id: ", id, " gameid:", gameid);
-  const [getPhase, setPhase] = useState(1);
-  const [getTurn, setTurn] = useState(1);
-  const [cp1, setCp1] = useState(0);
-  const [cp2, setCp2] = useState(0);
-  const [wp1, setWp1] = useState(0);
-  const [wp2, setWp2] = useState(0);
+  const [getPhase, setPhase] = useState(props.match.phase);
+  const [getTurn, setTurn] = useState(props.match.turn);
+  const [cp1, setCp1] = useState(props.match.player1CP);
+  const [cp2, setCp2] = useState(props.match.player2CP);
+  const [wp1, setWp1] = useState(props.match.player1Score);
+  const [wp2, setWp2] = useState(props.match.player2Score);
   const adjustWP = (a, nr) => {
     console.log("x", wp1, wp2);
     if (nr === 1) setWp1(wp1 + a);
@@ -76,7 +163,7 @@ export default function GameView() {
               wp={adjustWP}
               valueCP={cp1}
               valueWP={wp1}
-              name="player1"
+              name={props.match.player1}
               side="left"
             />
           </div>
@@ -87,7 +174,7 @@ export default function GameView() {
               wp={adjustWP}
               valueCP={cp2}
               valueWP={wp2}
-              name="player2"
+              name={props.match.player2}
               side="right"
             />
           </div>
@@ -117,7 +204,7 @@ export default function GameView() {
               wp={adjustWP}
               valueCP={cp2}
               valueWP={wp2}
-              name="player2"
+              name={props.match.player2}
               side="left"
             />
           </div>
@@ -128,7 +215,7 @@ export default function GameView() {
               wp={adjustWP}
               valueCP={cp1}
               valueWP={wp1}
-              name="player1"
+              name={props.match.player1}
               side="right"
             />
           </div>
@@ -149,3 +236,5 @@ export default function GameView() {
       </div>
     );
 }
+
+export default withRouter(GameContainer);

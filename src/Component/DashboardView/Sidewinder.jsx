@@ -5,7 +5,7 @@ export default function Sidewinder() {
     <div className="menu">
       <ul>
         <li>
-          <Link to={`/game/myId/myGameId`}> Start new Game</Link>
+          <Link to={`/game/a/1`}> Start new Game</Link>
         </li>
 
         <li>
