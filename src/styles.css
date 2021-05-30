@@ -49,28 +49,26 @@ body {
   font-size: 12px;
   padding: 15px;
 }
-
-.carusel {
-  border-radius: 4px;
-  max-width: 80%;
-  max-height: 20%;
+.carouselx {
+  margin: auto;
+  justify-content: center;
+  align-self: center;
 }
 .carousel {
   /* make sure your .items will get correct height */
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
 }
-
+.carousel-inner {
+}
 .carousel-item {
-  background-size: cover;
-  background-position: 50% 50%;
-  width: 100%;
-  min-height: 250px;
-  max-height: 250px;
 }
 .carousel-item img {
-  width: 100%;
   -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
   filter: blur(1px);
+  max-height: 60% !important; /* change this to whatever you want */
+  object-fit: cover !important;
+  width: 100%;
 }
 .row::after {
   content: "";
@@ -81,6 +79,7 @@ body {
   width: 100%;
   overflow: hidden;
   margin: auto;
+  align-items: center;
 }
 .mainDiv {
   margin: 2vh 2vw 2vh 2vw;
@@ -104,6 +103,9 @@ body {
   .row {
     display: inline-block;
   }
+  .carousel-item img {
+    height: 400px;
+  }
 }
 .header a {
   text-decoration: none;
@@ -114,9 +116,12 @@ body {
   background-color: var(--highlight);
 }
 
-@media only screen and (min-width: 700px) and (max-width: 768px) {
+@media only screen and (min-width: 640px) and (max-width: 768px) {
   div.buttonrow {
     display: none !important;
+  }
+  .carousel-item img {
+    height: 50vh;
   }
   .colu-s-0 {
     width: 0%;
@@ -156,6 +161,7 @@ body {
   }
   .colu-s-12 {
     width: 100%;
+    align-self: center;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -197,5 +203,7 @@ body {
   }
   .colu-12 {
     width: 100%;
+
+    align-self: center;
   }
 }

@@ -17,24 +17,25 @@ class Dashboard extends Component {
   };
   componentDidMount() {
     console.log(this.token, "and", this.id);
-    fetch("http://localhost:8080/api/v1/authenticate/dev/" + this.token, {
-      method: "GET",
-      mode: "cors"
-    })
-      .then(function (response) {
-        console.log(response);
-        if (response.ok) return response;
-        // parses json
-        alert("Token validation failed");
-        throw "Token was not valid";
+    if (this.id && this.token)
+      fetch("http://localhost:8080/api/v1/authenticate/dev/" + this.token, {
+        method: "GET",
+        mode: "cors"
       })
-      .then((name) => {
-        this.setState({ loading: false });
-      })
-      .catch((e) => {
-        console.log(e);
-        this.props.history.push("/login");
-      });
+        .then(function (response) {
+          console.log(response);
+          if (response.ok) return response;
+          // parses json
+          alert("Token validation failed");
+          throw "Token was not valid";
+        })
+        .then((name) => {
+          this.setState({ loading: false });
+        })
+        .catch((e) => {
+          console.log(e);
+          this.props.history.push("/login");
+        });
   }
 
   render() {
@@ -43,12 +44,15 @@ class Dashboard extends Component {
     if (this.id && this.token)
       if (this.state.loading)
         return (
-          <ReactLoading
-            type={"balls"}
-            color={"#black"}
-            height={667}
-            width={375}
-          />
+          <center>
+            <ReactLoading
+              type={"balls"}
+              color={"#black"}
+              height={667}
+              width={375}
+            />
+            shooting through Orks to reach dashboard.
+          </center>
         );
       else
         return (

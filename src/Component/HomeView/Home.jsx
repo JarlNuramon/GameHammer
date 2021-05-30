@@ -9,6 +9,8 @@ export default function Home() {
         <div className="colu-12 colu-s-12">
           <Carusel />
         </div>
+      </div>
+      <div className="row">
         <div className="colu-12 colu-s-12">
           <Main />
         </div>

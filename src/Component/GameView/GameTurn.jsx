@@ -25,7 +25,13 @@ export default function GameTurn(props) {
     <div className="gameTurn">
       <div className="Phase">{map[props.phase % 7]}</div>
       <Button disabled={isLoading} onClick={!isLoading ? handleClick : null}>
-        {isLoading ? "Loading…" : "Next phase"}
+        {isLoading
+          ? "Loading…"
+          : props.phase === 7
+          ? "Next Player"
+          : props.phase === 14
+          ? "Next Turn"
+          : "Next phase"}
       </Button>
     </div>
   );

@@ -36,8 +36,8 @@ class Login extends Component {
         else alert("Login failed");
       })
       .then((myJson) => {
-        this.props.history.push("/dashboard/" + this.state.username);
         cookie.save("token", myJson.token, { path: "/" });
+        this.props.history.push("/dashboard/" + this.state.username);
         console.log(myJson);
       })
       .catch(function (error) {
@@ -86,8 +86,8 @@ class Login extends Component {
   };
 
   changeForm = () => {
-    this.setState({ login: !this.state.login })
-  }
+    this.setState({ login: !this.state.login });
+  };
 
   render() {
     if (this.state.login)
