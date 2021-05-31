@@ -9,6 +9,19 @@
 .left .counter li {
   float: left;
 }
+#round {
+  border-radius: 100%;
+}
+.Dummy {
+  min-width: 100%;
+  min-height: 60vh;
+}
+.names {
+  font-size: 1.5em;
+  font-weight: bolder;
+  margin: 0;
+  display: inline-block;
+}
 .right .counter li {
   float: right;
 }

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { Component, useState } from "react";
 import { withRouter } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
-
+import { Button } from "react-bootstrap";
 class GameContainer extends Component {
   state = {
     loading: true,
@@ -142,7 +142,15 @@ function GameView(props) {
     else setCp2(cp2 + a);
     postAdjust();
   };
-  const handleClick = (nr) => {};
+  const handleClick = (nr) => {
+    if (!isFlipped) {
+      setFlipped(true);
+      setP(nr);
+    } else {
+      setFlipped(false);
+      setP(null);
+    }
+  };
   const nextTurn = () => {
     fetch(
       "http://localhost:8080/api/v1/match/" +
@@ -197,6 +205,7 @@ function GameView(props) {
                 wp={adjustWP}
                 valueCP={cp1}
                 valueWP={wp1}
+                info={handleClick}
                 name={props.match.player1}
                 side="left"
               />
@@ -208,6 +217,7 @@ function GameView(props) {
                 wp={adjustWP}
                 valueCP={cp2}
                 valueWP={wp2}
+                info={handleClick}
                 name={props.match.player2}
                 side="right"
               />
@@ -238,6 +248,7 @@ function GameView(props) {
                 wp={adjustWP}
                 valueCP={cp2}
                 valueWP={wp2}
+                info={handleClick}
                 name={props.match.player2}
                 side="left"
               />
@@ -249,6 +260,7 @@ function GameView(props) {
                 wp={adjustWP}
                 valueCP={cp1}
                 valueWP={wp1}
+                info={handleClick}
                 name={props.match.player1}
                 side="right"
               />
@@ -273,7 +285,20 @@ function GameView(props) {
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
       {main()}
-      <div>hallo</div>
+      <Notes click={handleClick} p={p} />
     </ReactCardFlip>
+  );
+}
+function Notes(props) {
+  return (
+    <div className="Dummy">
+      <div>
+        Hier könnte Ihre Notiz stehen für die {props.phase}-Phase stehen
+        {props.p}
+      </div>
+      <Button onClick={() => props.click(null)} variant="outline-danger">
+        X
+      </Button>
+    </div>
   );
 }
