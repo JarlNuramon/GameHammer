@@ -10,11 +10,25 @@
   float: left;
 }
 #round {
-  border-radius: 100%;
+  width: 6vw;
+  height: 6vw;
+  border-radius: 50%;
+}
+.react-card-flip {
+  padding-top: 5px;
 }
 .Dummy {
   min-width: 100%;
   min-height: 60vh;
+  padding: 10px;
+}
+.NoteDummy {
+  display: inline-block;
+}
+.ExitDummy {
+  float: right;
+  margin-top: 1%;
+  margin-right: 10%;
 }
 .names {
   font-size: 1.5em;

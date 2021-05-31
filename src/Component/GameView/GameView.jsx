@@ -192,7 +192,15 @@ function GameView(props) {
         console.log(error);
       });
   };
-
+  const map = {
+    1: "Command",
+    2: "Psychic",
+    3: "Move",
+    4: "Shooting",
+    5: "Charge",
+    6: "Assault",
+    0: "Moral"
+  };
   function main() {
     if (getPhase / 7 <= 1) {
       return (
@@ -285,18 +293,23 @@ function GameView(props) {
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
       {main()}
-      <Notes click={handleClick} p={p} />
+      <Notes click={handleClick} phase={map[getPhase % 7]} p={p} />
     </ReactCardFlip>
   );
 }
+
 function Notes(props) {
   return (
     <div className="Dummy">
-      <div>
-        Hier könnte Ihre Notiz stehen für die {props.phase}-Phase stehen
-        {props.p}
+      <div className="NoteDummy">
+        Spieler {props.p}, hier könnte Ihre Notiz stehen für die {props.phase}
+        -Phase stehen!!!
       </div>
-      <Button onClick={() => props.click(null)} variant="outline-danger">
+      <Button
+        className="ExitDummy"
+        onClick={() => props.click(null)}
+        variant="outline-danger"
+      >
         X
       </Button>
     </div>

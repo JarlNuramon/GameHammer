@@ -78,7 +78,7 @@ body {
 .row {
   width: 100%;
   overflow: hidden;
-  margin: auto;
+  margin: 0 !important;
 }
 .mainDiv {
   margin: 2vh 2vw 2vh 2vw;
