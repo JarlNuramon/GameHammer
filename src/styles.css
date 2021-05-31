@@ -100,7 +100,7 @@ body {
     display: none;
   }
   .row {
-    display: inline-block;
+    display: inline-block !important;
   }
   .carousel-item img {
     height: 400px;

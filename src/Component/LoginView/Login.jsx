@@ -210,7 +210,7 @@ class Login extends Component {
                     Create
                   </Button>
                   <p className="text-right">
-                    Already registered{" "}
+                    Already registered
                     <a href="#" onClick={this.changeForm}>
                       sign in?
                     </a>

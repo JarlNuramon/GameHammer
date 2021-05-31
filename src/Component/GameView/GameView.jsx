@@ -6,6 +6,8 @@ import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import { Component, useState } from "react";
 import { withRouter } from "react-router-dom";
+import ReactCardFlip from "react-card-flip";
+
 class GameContainer extends Component {
   state = {
     loading: true,
@@ -90,27 +92,58 @@ class GameContainer extends Component {
   }
 }
 
+export default withRouter(GameContainer);
+
+//GAMEVIEW
+
 function GameView(props) {
   let { id, gameid } = useParams();
   console.log("id: ", id, " gameid:", gameid);
   const [getPhase, setPhase] = useState(props.match.phase);
   const [getTurn, setTurn] = useState(props.match.turn);
+  const [isFlipped, setFlipped] = useState(false);
+  const [p, setP] = useState(null);
   const [cp1, setCp1] = useState(props.match.player1CP);
   const [cp2, setCp2] = useState(props.match.player2CP);
   const [wp1, setWp1] = useState(props.match.player1Score);
   const [wp2, setWp2] = useState(props.match.player2Score);
+  const postAdjust = () => {
+    fetch(
+      "http://localhost:8080/api/v1/match/" +
+        gameid +
+        "/update?apiToken=" +
+        cookie.load("token"),
+      {
+        body: JSON.stringify({
+          player1Score: wp1,
+          player2Score: wp2,
+          player1CP: cp1,
+          player2CP: cp2
+        }),
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "POST",
+        mode: "cors"
+      }
+    ).then(function (response) {
+      if (!response.ok) alert("That didnt work");
+    });
+  };
   const adjustWP = (a, nr) => {
     console.log("x", wp1, wp2);
     if (nr === 1) setWp1(wp1 + a);
     else setWp2(wp2 + a);
+    postAdjust();
   };
 
   const adjustCP = (a, nr) => {
     if (nr === 1) setCp1(cp1 + a);
     else setCp2(cp2 + a);
+    postAdjust();
   };
-
-  function nextTurn() {
+  const handleClick = (nr) => {};
+  const nextTurn = () => {
     fetch(
       "http://localhost:8080/api/v1/match/" +
         gameid +
@@ -126,8 +159,8 @@ function GameView(props) {
         setPhase(1);
       }
     });
-  }
-  function nextPhase() {
+  };
+  const nextPhase = () => {
     return fetch(
       "http://localhost:8080/api/v1/match/" +
         gameid +
@@ -150,91 +183,97 @@ function GameView(props) {
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  function main() {
+    if (getPhase / 7 <= 1) {
+      return (
+        <div>
+          <div className="row">
+            <div className="colu-6 colu-s-6">
+              <PlayerComponent
+                nr={1}
+                cp={adjustCP}
+                wp={adjustWP}
+                valueCP={cp1}
+                valueWP={wp1}
+                name={props.match.player1}
+                side="left"
+              />
+            </div>
+            <div className="colu-6 colu-s-6">
+              <PlayerComponent
+                nr={2}
+                cp={adjustCP}
+                wp={adjustWP}
+                valueCP={cp2}
+                valueWP={wp2}
+                name={props.match.player2}
+                side="right"
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="colu-12 colu-s-12">
+              <center>
+                <h4> Turn(P1): {getTurn}</h4>
+              </center>
+            </div>
+          </div>
+          <div className="row">
+            <div className="colu-12 colu-s-12">
+              <GameTurn next={nextPhase} phase={getPhase} />
+            </div>
+          </div>
+        </div>
+      );
+    } else
+      return (
+        <div>
+          <div className="row">
+            <div className="colu-6 colu-s-6">
+              <PlayerComponent
+                nr={2}
+                cp={adjustCP}
+                wp={adjustWP}
+                valueCP={cp2}
+                valueWP={wp2}
+                name={props.match.player2}
+                side="left"
+              />
+            </div>
+            <div className="colu-6 colu-s-6">
+              <PlayerComponent
+                nr={1}
+                cp={adjustCP}
+                wp={adjustWP}
+                valueCP={cp1}
+                valueWP={wp1}
+                name={props.match.player1}
+                side="right"
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="colu-12 colu-s-12">
+              <center>
+                <h4> Turn (P2): {getTurn}</h4>
+              </center>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="colu-12 colu-s-12">
+              <GameTurn next={nextPhase} phase={getPhase} />
+            </div>
+          </div>
+        </div>
+      );
   }
-  console.log(getPhase);
-  if (getPhase / 7 <= 1) {
-    return (
-      <div>
-        <div className="row">
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={1}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp1}
-              valueWP={wp1}
-              name={props.match.player1}
-              side="left"
-            />
-          </div>
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={2}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp2}
-              valueWP={wp2}
-              name={props.match.player2}
-              side="right"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="colu-12 colu-s-12">
-            <center>
-              <h4> Turn(P1): {getTurn}</h4>
-            </center>
-          </div>
-        </div>
-        <div className="row">
-          <div className="colu-12 colu-s-12">
-            <GameTurn next={nextPhase} phase={getPhase} />
-          </div>
-        </div>
-      </div>
-    );
-  } else
-    return (
-      <div>
-        <div className="row">
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={2}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp2}
-              valueWP={wp2}
-              name={props.match.player2}
-              side="left"
-            />
-          </div>
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={1}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp1}
-              valueWP={wp1}
-              name={props.match.player1}
-              side="right"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="colu-12 colu-s-12">
-            <center>
-              <h4> Turn (P2): {getTurn}</h4>
-            </center>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="colu-12 colu-s-12">
-            <GameTurn next={nextPhase} phase={getPhase} />
-          </div>
-        </div>
-      </div>
-    );
+  return (
+    <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+      {main()}
+      <div>hallo</div>
+    </ReactCardFlip>
+  );
 }
-
-export default withRouter(GameContainer);
