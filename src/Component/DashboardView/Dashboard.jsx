@@ -5,7 +5,6 @@ import ButtonRow from "./ButtonRow";
 import cookie from "react-cookies";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
-
 import ReactLoading from "react-loading";
 class Dashboard extends Component {
   state = {
@@ -33,12 +32,14 @@ class Dashboard extends Component {
           if (name === this.id) this.setState({ loading: false });
           else {
             alert("You are not the user for this dashboard");
+            console.log("pushed out");
             this.props.history.push("/dashboard/" + name);
             this.setState({ loading: false });
           }
         })
         .catch((e) => {
           console.log(e);
+          console.log("pushed out");
           this.props.history.push("/login");
         });
   }

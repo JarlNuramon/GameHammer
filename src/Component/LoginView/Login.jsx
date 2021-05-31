@@ -37,6 +37,7 @@ class Login extends Component {
       })
       .then((myJson) => {
         cookie.save("token", myJson.token, { path: "/" });
+        cookie.save("userIdentifier", this.state.username, { path: "/" });
         this.props.history.push("/dashboard/" + this.state.username);
         console.log(myJson);
       })

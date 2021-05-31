@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Link, useRouteMatch } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-
+import cookie from "react-cookies";
 export default function Header() {
   return (
     <div className="header">
@@ -12,7 +12,9 @@ export default function Header() {
               <Link to={`/home`}>Home</Link>
             </Nav.Link>
             <Nav.Link>
-              <Link to={`/dashboard`}>Dashboard</Link>
+              <Link to={`/dashboard/` + cookie.load("userIdentifier")}>
+                Dashboard
+              </Link>
             </Nav.Link>
             <Nav.Link>
               <Link to={`/login`}>My Account</Link>
