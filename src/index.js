@@ -13,6 +13,7 @@ import GameContainer from "./Component/GameView/GameView";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import StartGame from "./Component/DashboardView/StartGame";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Switch>
         <Route path="/dashboard/:id" children={<Dashboard />}></Route>
         <Route path="/dashboard" children={<Dashboard />}></Route>
+        <Route path="/game/:id/start" children={<StartGame />}></Route>
         <Route path="/game/:id/:gameid" children={<GameContainer />} />
         <Route path="/login" children={<Login />} />
         <Route path="/home">

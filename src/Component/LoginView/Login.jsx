@@ -3,6 +3,7 @@ import { Jumbotron, Form, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import cookie from "react-cookies";
+
 class Login extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
@@ -17,6 +18,7 @@ class Login extends Component {
     password: "",
     matchingPassword: ""
   };
+
   handleLogin = (event) => {
     event.preventDefault();
     fetch("http://localhost:8080/api/v1/authenticate/authenticate", {
@@ -211,7 +213,7 @@ class Login extends Component {
                     Create
                   </Button>
                   <p className="text-right">
-                    Already registered
+                    Already registered{" "}
                     <a href="#" onClick={this.changeForm}>
                       sign in?
                     </a>

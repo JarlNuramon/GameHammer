@@ -1,13 +1,8 @@
 import DataTable from "react-data-table-component";
 import React from "react";
-const data = [
-  {
-    id: 1,
-    date: "25.02.2020",
-    score: "3vs4",
-    enemy: "Opponent1"
-  }
-];
+import cookie from "react-cookies";
+import { Link } from "react-router-dom";
+
 const columns = [
   {
     name: "Date",
@@ -22,6 +17,9 @@ const columns = [
     name: "Score",
     selector: "score",
     sortable: true,
+    cell: (row) => (
+      <div>{row.player1Score} vs {row.player2Score}</div>
+    ),
     right: true
   },
   {
@@ -30,24 +28,68 @@ const columns = [
     sortable: true,
     cell: (row) => (
       <div>
-        <div>{row.enemy}</div>
+        <div>{row.player2}: {row.player2Race}</div>
         {row.summary}
       </div>
     )
   }
 ];
+
 export default class GameTable extends React.Component {
+  state = {
+    data: [
+      {
+        id: 1,
+        player1: "a",
+        player2: "Opponent1",
+        player1Score: 0,
+        player2Score: 0,
+        player1CP: 0,
+        player2CP: 0,
+        player1Race: "Necron",
+        player2Race: "Death Guard",
+        turn: 0,
+        phase: 0,
+        date: "25.02.2020"
+      }
+    ]
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:8080/api/v1/match/matchesAsHost/" + this.id, {
+      headers: {
+        "content-type": "application/json"
+      },
+      method: "GET",
+      mode: "cors"
+    }).then(function (response) {
+        if (response.ok) return response.json();
+        // parses json
+        else throw "Could not Load Matches";
+      }).then((myJson) => {
+        this.setState({ data: myJson })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  rowClicked = r => console.log(r)
+
   render() {
+    this.id = cookie.load("userIdentifier");
+
     return (
       <div className="Table">
         <DataTable
           title="Games:"
           columns={columns}
-          data={data}
+          data={this.state.data}
           expandableRows
           expandOnRowClicked
           expandableRowsHideExpander
           expandableRowsComponent={<ExpandableComponent />}
+          onRowClicked={this.rowClicked}
         />
       </div>
     );
@@ -55,6 +97,29 @@ export default class GameTable extends React.Component {
 }
 
 // The row data is composed into your custom expandable component via the data prop
-const ExpandableComponent = ({ data }) => (
-  <div className="Table">all the infos</div>
-);
+const ExpandableComponent = ({ data }) => (<div>
+  <div className="Table">
+    Game Info
+    <ul>
+      <li>Id: {data.id}</li>
+      <li>Turn: {data.turn}</li>
+      <li>Phase: {data.phase}</li>
+      <li>Date: {data.date}</li>
+    </ul>
+
+    Player Host: {data.player1}
+    <ul>
+      <li>Score: {data.player1Score}</li>
+      <li>CP: {data.player1CP}</li>
+      <li>Race: {data.player1Race}</li>
+    </ul>
+
+    Player Enemy: {data.player2}
+    <ul>
+      <li>Score: {data.player2Score}</li>
+      <li>CP: {data.player2CP}</li>
+      <li>Race: {data.player2Race}</li>
+    </ul>
+  </div>
+  <Link to={'/game/a/' + data.id}> Back to the Game</Link>
+</div>);

@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ButtonRow() {
   return (
     <div className="buttonrow">
       <ul>
         <li>
-          <Link to={`/game/myId/myGameId`}> Start new Game</Link>
+          <Link to={`/game/a/start`}> Start new Game</Link>
         </li>
 
         <li>

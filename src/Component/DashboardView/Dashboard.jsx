@@ -6,6 +6,7 @@ import cookie from "react-cookies";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
+
 class Dashboard extends Component {
   state = {
     loading: true
