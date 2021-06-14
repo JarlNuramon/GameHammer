@@ -18,7 +18,9 @@ const columns = [
     selector: "score",
     sortable: true,
     cell: (row) => (
-      <div>{row.player1Score} vs {row.player2Score}</div>
+      <div>
+        {row.player1Score} vs {row.player2Score}
+      </div>
     ),
     right: true
   },
@@ -28,7 +30,9 @@ const columns = [
     sortable: true,
     cell: (row) => (
       <div>
-        <div>{row.player2}: {row.player2Race}</div>
+        <div>
+          {row.player2}: {row.player2Race}
+        </div>
         {row.summary}
       </div>
     )
@@ -53,7 +57,7 @@ export default class GameTable extends React.Component {
         date: "25.02.2020"
       }
     ]
-  }
+  };
 
   componentDidMount() {
     fetch("http://localhost:8080/api/v1/match/matchesAsHost/" + this.id, {
@@ -62,19 +66,21 @@ export default class GameTable extends React.Component {
       },
       method: "GET",
       mode: "cors"
-    }).then(function (response) {
+    })
+      .then(function (response) {
         if (response.ok) return response.json();
         // parses json
         else throw "Could not Load Matches";
-      }).then((myJson) => {
-        this.setState({ data: myJson })
+      })
+      .then((myJson) => {
+        this.setState({ data: myJson });
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
-  rowClicked = r => console.log(r)
+  rowClicked = (r) => console.log(r);
 
   render() {
     this.id = cookie.load("userIdentifier");
@@ -97,29 +103,29 @@ export default class GameTable extends React.Component {
 }
 
 // The row data is composed into your custom expandable component via the data prop
-const ExpandableComponent = ({ data }) => (<div>
-  <div className="Table">
-    Game Info
-    <ul>
-      <li>Id: {data.id}</li>
-      <li>Turn: {data.turn}</li>
-      <li>Phase: {data.phase}</li>
-      <li>Date: {data.date}</li>
-    </ul>
-
-    Player Host: {data.player1}
-    <ul>
-      <li>Score: {data.player1Score}</li>
-      <li>CP: {data.player1CP}</li>
-      <li>Race: {data.player1Race}</li>
-    </ul>
-
-    Player Enemy: {data.player2}
-    <ul>
-      <li>Score: {data.player2Score}</li>
-      <li>CP: {data.player2CP}</li>
-      <li>Race: {data.player2Race}</li>
-    </ul>
+const ExpandableComponent = ({ data }) => (
+  <div>
+    <div className="Table">
+      Game Info
+      <ul>
+        <li>Id: {data.id}</li>
+        <li>Turn: {data.turn}</li>
+        <li>Phase: {data.phase}</li>
+        <li>Date: {data.date}</li>
+      </ul>
+      Player Host: {data.player1}
+      <ul>
+        <li>Score: {data.player1Score}</li>
+        <li>CP: {data.player1CP}</li>
+        <li>Race: {data.player1Race}</li>
+      </ul>
+      Player Enemy: {data.player2}
+      <ul>
+        <li>Score: {data.player2Score}</li>
+        <li>CP: {data.player2CP}</li>
+        <li>Race: {data.player2Race}</li>
+      </ul>
+    </div>
+    <Link to={"/game/" + data.player1 + "/" + data.id}> Back to the Game</Link>
   </div>
-  <Link to={'/game/a/' + data.id}> Back to the Game</Link>
-</div>);
+);
