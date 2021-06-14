@@ -5,7 +5,8 @@ export default class StartGame extends Component {
     data: this.props.data,
     name: this.props.name,
     value: this.props.value,
-    onChange: this.props.onChange
+    onChange: this.props.onChange,
+    required: this.props.required ? this.props.required : false
   };
 
   build = arr => {
@@ -13,16 +14,15 @@ export default class StartGame extends Component {
           (arr[prop] instanceof Array) ?
                 (<optgroup label={prop}>
                     {this.build(arr[prop])}
-                </optgroup>)
-            : (arr[prop] instanceof Object) ?
-                    (<>{this.build(arr[prop])}</>)
-            : (<option value={arr[prop]}>{arr[prop]}</option>)
+                </optgroup>) : 
+                (<option value={arr[prop]}>{arr[prop]}</option>)
         )
   }
 
   render() {
     return (
-      <select name={this.state.name} value={this.state.value} onChange={this.state.onChange}>
+      <select required={this.state.required} name={this.state.name} value={this.state.value} onChange={this.state.onChange}>
+        <option value="" selected disabled>--Please choose an option--</option>
         {this.build(this.state.data)}
       </select>
     );
