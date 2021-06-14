@@ -80,8 +80,6 @@ export default class GameTable extends React.Component {
       });
   }
 
-  rowClicked = (r) => console.log(r);
-
   render() {
     this.id = cookie.load("userIdentifier");
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Jumbotron, Form, Button } from "react-bootstrap";
 import NestedSelect from "./NestedSelect";
 import cookie from "react-cookies";
-import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const data = {
     Aeldari: ['Craftworlds', 'Durukhari', 'Harlequinn'],
@@ -16,7 +16,7 @@ const data = {
     Unaligned: ['Monsters & Gribbles']
 };
 
-export default class StartGame extends Component {
+class StartGame extends Component {
   state = {
     player2: undefined,
     player2isValid: false,
@@ -75,7 +75,7 @@ export default class StartGame extends Component {
       else throw "Match could not be started";
     }).then((myJson) => {
       // use parseed result
-      this.props.history.push('/dashboard/' + this.id + '/' + myJson);
+      this.props.history.push('/game/' + this.id + '/' + myJson);
     }).catch(function (error) {
       alert(error)
       console.error(error);
@@ -158,3 +158,5 @@ export default class StartGame extends Component {
     );
   }
 }
+
+export default withRouter(StartGame);
