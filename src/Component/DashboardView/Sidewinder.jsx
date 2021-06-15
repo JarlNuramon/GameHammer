@@ -7,9 +7,11 @@ export default function Sidewinder() {
         <li>
           <Link to={`/game/a/start`}> Start new Game</Link>
         </li>
-
         <li>
-          <Link to={`/myaccount`}> My Account</Link>
+          <Link to={`/game/a/start`}> Configure Army Lists</Link>
+        </li>
+        <li>
+          <Link to={`/logout`}> Logout</Link>
         </li>
       </ul>
     </div>

@@ -14,6 +14,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import StartGame from "./Component/DashboardView/StartGame";
+import HomeLogout from "./Component/HomeView/HomeLogout";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
         <Route path="/login" children={<Login />} />
         <Route path="/home">
           <Home />
+        </Route>
+        <Route path="/logout">
+          <HomeLogout />
         </Route>
         <Route path="/">
           <Home />

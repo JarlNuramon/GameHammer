@@ -25,7 +25,20 @@ const columns = [
     right: true
   },
   {
-    name: "Enemy",
+    name: "Host",
+    selector: "host",
+    sortable: true,
+    cell: (row) => (
+      <div>
+        <div>
+          {row.player1}: {row.player1Race}
+        </div>
+        {row.summary}
+      </div>
+    )
+  },
+  {
+    name: "Challenger",
     selector: "enemy",
     sortable: true,
     cell: (row) => (
@@ -54,19 +67,26 @@ export default class GameTable extends React.Component {
         player2Race: "Death Guard",
         turn: 0,
         phase: 0,
-        date: "25.02.2020"
+        date: "25.02.2020",
+        state: 0
       }
     ]
   };
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/v1/match/matchesAsHost/" + this.id, {
-      headers: {
-        "content-type": "application/json"
-      },
-      method: "GET",
-      mode: "cors"
-    })
+    fetch(
+      "http://localhost:8080/api/v1/match/matchesAsHost/" +
+        this.id +
+        "?apiToken=" +
+        cookie.load("token"),
+      {
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET",
+        mode: "cors"
+      }
+    )
       .then(function (response) {
         if (response.ok) return response.json();
         // parses json
@@ -123,7 +143,16 @@ const ExpandableComponent = ({ data }) => (
         <li>CP: {data.player2CP}</li>
         <li>Race: {data.player2Race}</li>
       </ul>
+      {!data.state || data.state === 0 ? (
+        <Link
+          className="backToGame"
+          to={"/game/" + data.player1 + "/" + data.id}
+        >
+          Back to the Game
+        </Link>
+      ) : (
+        ""
+      )}
     </div>
-    <Link to={"/game/" + data.player1 + "/" + data.id}> Back to the Game</Link>
   </div>
 );

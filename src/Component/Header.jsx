@@ -3,6 +3,7 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import cookie from "react-cookies";
 export default function Header() {
   let user = cookie.load("userIdentifier");
+  console.log("User is " + user);
   return (
     <div className="header">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

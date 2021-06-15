@@ -1,3 +1,19 @@
 .Table {
   min-height: 75vh;
 }
+
+.backToGame {
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-width: 4px;
+  border-color: var(--contrast);
+  padding: 4px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.Table a:hover {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--contrast);
+}
