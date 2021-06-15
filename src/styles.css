@@ -1,32 +1,36 @@
 body {
   height: 100%;
   width: 100%;
+  --primary: #fff;
+  --secondary: grey;
+  --tertiary: #f0f9ff;
+  --contrast: black;
 }
 
 .menu ul {
   text-decoration: none;
   list-style: none;
-  color: black;
+  color: var(--contrast);
 }
 .menu li {
-  color: black !important;
-  background-color: grey;
+  color: var(--contrast) !important;
+  background-color: var(--secondary);
   margin: 0px 1px 10px 0px;
   padding: 5px 5px 5px 5px;
   border-radius: 5px;
 }
 .menu li a {
-  color: #f0f9ff !important;
+  color: var(--tertiary) !important;
 }
 .buttonrow ul {
   text-decoration: none;
   list-style: none;
-  color: black;
+  color: var(--contrast);
   overflow: hidden;
 }
 .buttonrow li {
-  color: black !important;
-  background-color: grey;
+  color: var(--contrast) !important;
+  background-color: var(--secondary);
   margin: 0px 1px 10px 0px;
   padding: 5px 5px 5px 5px;
   border-radius: 5px;
@@ -34,7 +38,7 @@ body {
 }
 .buttonrow li a {
   display: block;
-  color: #f0f9ff !important;
+  color: var(--secondary) !important;
 }
 .menu {
   padding-top: 5px;
@@ -44,7 +48,7 @@ body {
   text-align: center;
 }
 .footer {
-  color: #ffffff;
+  color: var(--primary);
   text-align: center;
   font-size: 12px;
   padding: 15px;
@@ -108,11 +112,11 @@ body {
 }
 .header a {
   text-decoration: none;
-  color: #f0f9ff !important;
+  color: var(--tertiary) !important;
 }
 
 .header li:hover {
-  background-color: var(--highlight);
+  background-color: var(--contrast);
 }
 
 @media only screen and (min-width: 640px) and (max-width: 768px) {
