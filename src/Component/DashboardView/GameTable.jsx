@@ -146,7 +146,7 @@ const ExpandableComponent = ({ data }) => (
       {!data.state || data.state === 0 ? (
         <Link
           className="backToGame"
-          to={"/game/" + data.player1 + "/" + data.id}
+          to={"/game/" + cookie.load("userIdentifier") + "/" + data.id}
         >
           Back to the Game
         </Link>
