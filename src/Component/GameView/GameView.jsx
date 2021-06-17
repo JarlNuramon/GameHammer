@@ -5,7 +5,7 @@ import cookie from "react-cookies";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import { Component, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import { Button } from "react-bootstrap";
 class GameContainer extends Component {
@@ -290,12 +290,15 @@ function GameView(props) {
         </div>
       );
   }
-  return (
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-      {main()}
-      <Notes click={handleClick} phase={map[getPhase % 7]} p={p} />
-    </ReactCardFlip>
-  );
+  let user = cookie.load("userIdentifier");
+  if (props.match.player1 === user || props.match.player2 === user)
+    return (
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+        {main()}
+        <Notes click={handleClick} phase={map[getPhase % 7]} p={p} />
+      </ReactCardFlip>
+    );
+  else return <Redirect to={{ pathname: "/dashboard/" + user }} />;
 }
 
 function Notes(props) {
