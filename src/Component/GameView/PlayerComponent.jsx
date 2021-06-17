@@ -3,6 +3,7 @@ import Counters from "./Counter";
 import { Button } from "react-bootstrap";
 export default class PlayerComponent extends React.Component {
   render() {
+    console.log("Disabled in Player?: ", this.props.disable);
     return (
       <div className={"player " + this.props.side}>
         <div className={"player-name"}>
@@ -16,15 +17,18 @@ export default class PlayerComponent extends React.Component {
             ?
           </Button>
         </div>
+
         <Counters
           name="CP"
           value={this.props.valueCP}
+          disabled={this.props.disable ? true : false}
           up={() => this.props.cp(1, this.props.nr)}
           down={() => this.props.cp(-1, this.props.nr)}
         />
         <Counters
           name="WP"
           value={this.props.valueWP}
+          disabled={this.props.disable ? true : false}
           up={() => this.props.wp(1, this.props.nr)}
           down={() => this.props.wp(-1, this.props.nr)}
         />

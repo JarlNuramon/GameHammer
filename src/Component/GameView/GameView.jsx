@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import PlayerComponent from "./PlayerComponent";
 import GameTurn from "./GameTurn";
+import GameTurnWithEnd from "./GameTurnWithEnd";
 import cookie from "react-cookies";
 import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
@@ -8,6 +9,7 @@ import { Component, useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import { Button } from "react-bootstrap";
+
 class GameContainer extends Component {
   state = {
     loading: true,
@@ -97,6 +99,7 @@ export default withRouter(GameContainer);
 //GAMEVIEW
 
 function GameView(props) {
+  //variables
   let { id, gameid } = useParams();
   console.log("id: ", id, " gameid:", gameid);
   const [getPhase, setPhase] = useState(props.match.phase);
@@ -107,6 +110,8 @@ function GameView(props) {
   const [cp2, setCp2] = useState(props.match.player2CP);
   const [wp1, setWp1] = useState(props.match.player1Score);
   const [wp2, setWp2] = useState(props.match.player2Score);
+  const [end, setEnd] = useState(false);
+  //methodes
   const postAdjust = () => {
     fetch(
       "http://localhost:8080/api/v1/match/" +
@@ -192,6 +197,31 @@ function GameView(props) {
         console.log(error);
       });
   };
+  const endGame = () => {
+    return fetch(
+      "http://localhost:8080/api/v1/match/" +
+        gameid +
+        "/end?apiToken=" +
+        cookie.load("token"),
+      {
+        method: "POST",
+        mode: "cors"
+      }
+    )
+      .then(function (response) {
+        if (response.ok) return response;
+        // parses json
+        else alert("Login failed");
+      })
+      .then((myJson) => {
+        setEnd(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  //Constants
   const map = {
     1: "Command",
     2: "Psychic",
@@ -201,6 +231,7 @@ function GameView(props) {
     6: "Assault",
     0: "Moral"
   };
+
   function main() {
     if (getPhase / 7 <= 1) {
       return (
@@ -245,7 +276,7 @@ function GameView(props) {
           </div>
         </div>
       );
-    } else
+    } else {
       return (
         <div>
           <div className="row">
@@ -282,15 +313,69 @@ function GameView(props) {
             </div>
           </div>
 
-          <div className="row">
-            <div className="colu-12 colu-s-12">
-              <GameTurn next={nextPhase} phase={getPhase} />
-            </div>
-          </div>
+          {getPhase % 7 !== 0 ? gameTurnBasic() : gameTurnEnd()}
         </div>
       );
+    }
   }
+
+  function MainModified() {
+    return (
+      <div>
+        <div className="row">
+          <div className="colu-6 colu-s-6">
+            <PlayerComponent
+              nr={1}
+              cp={adjustCP}
+              wp={adjustWP}
+              valueCP={cp1}
+              valueWP={wp1}
+              info={handleClick}
+              name={props.match.player1}
+              side="left"
+              disable={true}
+            />
+          </div>
+          <div className="colu-6 colu-s-6">
+            <PlayerComponent
+              nr={2}
+              cp={adjustCP}
+              wp={adjustWP}
+              valueCP={cp2}
+              valueWP={wp2}
+              info={handleClick}
+              name={props.match.player2}
+              side="right"
+              disable={true}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function gameTurnEnd() {
+    return (
+      <div className="row">
+        <div className="colu-12 colu-s-12">
+          <GameTurnWithEnd next={nextPhase} end={endGame} phase={getPhase} />{" "}
+        </div>
+      </div>
+    );
+  }
+
+  function gameTurnBasic() {
+    return (
+      <div className="row">
+        <div className="colu-12 colu-s-12">
+          <GameTurn next={nextPhase} phase={getPhase} />{" "}
+        </div>
+      </div>
+    );
+  }
+
   let user = cookie.load("userIdentifier");
+  if (end) return <MainModified />;
   if (props.match.player1 === user || props.match.player2 === user)
     return (
       <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">

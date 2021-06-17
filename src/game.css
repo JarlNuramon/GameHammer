@@ -41,11 +41,11 @@
   padding: 5px;
 }
 .name {
-  font-size: 6vw !important;
+  font-size: calc(12px + 3vw) !important;
   font-weight: bolder !important;
 }
 .value {
-  font-size: 6vw !important;
+  font-size: calc(12px + 3vw) !important;
   font-weight: bolder !important;
 }
 .plus .btn,
@@ -53,16 +53,15 @@
   outline: none;
   border: 0px;
   box-sizing: none;
+  font-size: calc(12px + 3vw);
   background-color: transparent;
 }
 .plus .btn {
   color: green;
-  font-size: 6vw;
   font-weight: bolder;
 }
 .minus .btn {
   color: red;
-  font-size: 6vw;
   font-weight: bolder;
 }
 .player {
@@ -87,28 +86,28 @@
   text-align: center;
 }
 .Phase {
-  font-size: 10vw;
+  font-size: calc(18px + 2vw);
   text-align: center;
 }
 .gameTurn .btn {
   color: black;
   border-radius: 18px;
   margin: 5px;
-  font-size: 3vw;
+  font-size: calc(12px + 2vw);
   background-color: red;
 }
 .gameTurn .btn:active {
   color: black;
   border-radius: 18px;
   margin: 5px;
-  font-size: 3vw;
+  font-size: calc(12px + 2vw);
   background-color: rgb(100, 17, 17) !important;
 }
 .gameTurn .btn:disabled {
   color: black;
   border-radius: 18px;
   margin: 5px;
-  font-size: 3vw;
+  font-size: calc(12px + 2vw);
   opacity: 0.8;
   background-color: rgb(92, 23, 23) !important;
 }
