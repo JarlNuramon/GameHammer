@@ -4,6 +4,7 @@
   padding: 0;
   overflow: hidden;
   background-color: var(--tertiary);
+  opacity: 0.9;
   border-radius: 10px;
   justify-content: space-between;
 }
@@ -14,7 +15,7 @@
   background-image: var(--image);
   background-repeat: no-repeat;
   background-position: 50% 45%;
-  background-size: 80 vw 80vh;
+  background-size: contain;
 }
 
 .left .counter li {
@@ -22,6 +23,7 @@
 }
 #round {
   border-radius: 50%;
+  border-color: var(--contrast);
 }
 .react-card-flip {
   padding-top: 5px;
