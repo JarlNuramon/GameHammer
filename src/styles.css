@@ -2,9 +2,13 @@ body {
   height: 100%;
   width: 100%;
   --primary: #fff;
-  --secondary: grey;
-  --tertiary: #f0f9ff;
+  --secondary: #343a40;
+  --tertiary: whitesmoke;
   --contrast: black;
+  --powerless: rgb(66, 55, 55);
+  --minus: red;
+  --plus: green;
+  --image: "";
 }
 
 .menu ul {
@@ -38,7 +42,7 @@ body {
 }
 .buttonrow li a {
   display: block;
-  color: var(--secondary) !important;
+  color: var(--tertiary) !important;
 }
 .menu {
   padding-top: 5px;
@@ -112,11 +116,11 @@ body {
 }
 .header a {
   text-decoration: none;
-  color: var(--tertiary) !important;
+  color: whitesmoke !important;
 }
 
 .header li:hover {
-  background-color: var(--contrast);
+  background-color: black;
 }
 
 @media only screen and (min-width: 640px) and (max-width: 768px) {

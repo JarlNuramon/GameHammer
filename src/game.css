@@ -3,9 +3,20 @@
   margin: 4px;
   padding: 0;
   overflow: hidden;
-  background-color: whitesmoke;
+  background-color: var(--tertiary);
   border-radius: 10px;
+  justify-content: space-between;
 }
+.view {
+  height: 100vh;
+  color: var(--contrast);
+  background-color: var(--primary);
+  background-image: var(--image);
+  background-repeat: no-repeat;
+  background-position: 50% 45%;
+  background-size: 80 vw 80vh;
+}
+
 .left .counter li {
   float: left;
 }
@@ -21,12 +32,14 @@
   padding: 10px;
 }
 .NoteDummy {
-  display: inline-block;
+  margin-top: 5%;
+  padding-right: 25%;
 }
 .ExitDummy {
-  float: right;
   margin-top: 1%;
-  margin-right: 10%;
+  margin-right: 5%;
+  position: absolute;
+  left: 85%;
 }
 .names {
   font-size: 1.5em;
@@ -57,11 +70,11 @@
   background-color: transparent;
 }
 .plus .btn {
-  color: green;
+  color: var(--plus);
   font-weight: bolder;
 }
 .minus .btn {
-  color: red;
+  color: var(--minus);
   font-weight: bolder;
 }
 .player {
@@ -71,17 +84,14 @@
   padding-left: 5vw;
   width: 100%;
 }
-
 .left {
   float: left;
   text-align: left;
 }
-
 .right {
   text-align: right;
   float: right;
 }
-
 .gameTurn {
   text-align: center;
 }
@@ -90,18 +100,18 @@
   text-align: center;
 }
 .gameTurn .btn {
-  color: black;
+  color: var(--tertiary);
   border-radius: 18px;
   margin: 5px;
   font-size: calc(12px + 2vw);
-  background-color: red;
+  background-color: var(--secondary);
 }
 .gameTurn .btn:active {
   color: black;
   border-radius: 18px;
   margin: 5px;
   font-size: calc(12px + 2vw);
-  background-color: rgb(100, 17, 17) !important;
+  background-color: var(--powerless) !important;
 }
 .gameTurn .btn:disabled {
   color: black;
@@ -109,5 +119,5 @@
   margin: 5px;
   font-size: calc(12px + 2vw);
   opacity: 0.8;
-  background-color: rgb(92, 23, 23) !important;
+  background-color: var(--powerless) !important;
 }

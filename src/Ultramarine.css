@@ -1,8 +1,0 @@
-body {
-  height: 100%;
-  width: 100%;
-  --primary: rgba(255, 255, 255, 0.767);
-  --secondary: rgb(22, 0, 100);
-  --tertiary: #fafff0;
-  --contrast: rgb(179, 132, 4);
-}
