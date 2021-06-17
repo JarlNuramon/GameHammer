@@ -9,15 +9,32 @@ import { Component, useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import { Button } from "react-bootstrap";
-
+import themes from "../../themes";
 class GameContainer extends Component {
   state = {
     loading: true,
-    match: null
+    match: null,
+    theme: "none"
   };
   static propTypes = {
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
+  };
+  setColor = (color) => {
+    if (color !== this.state.theme) this.setState({ theme: color });
+  };
+  setTheme = () => {
+    if (this.state.theme === "none") return;
+    console.log(this.state.theme);
+    let name = this.state.theme.split(" ");
+    let theme = themes[name[name.length - 1]];
+    console.log(themes);
+    console.log("theme was ", theme);
+    Object.keys(theme).forEach((key) => {
+      let cssKey = `--${key}`;
+      let cssValue = theme[key];
+      document.body.style.setProperty(cssKey, cssValue);
+    });
   };
   getMatch() {
     fetch(
@@ -90,10 +107,14 @@ class GameContainer extends Component {
             shooting through Orks to reach dashboard.
           </center>
         );
-      else return <GameView match={this.state.match} />;
+      else this.setTheme();
+    return (
+      <div className="view">
+        <GameView match={this.state.match} setColor={this.setColor} />
+      </div>
+    );
   }
 }
-
 export default withRouter(GameContainer);
 
 //GAMEVIEW
@@ -233,7 +254,9 @@ function GameView(props) {
   };
 
   function main() {
+    console.log(props);
     if (getPhase / 7 <= 1) {
+      props.setColor(props.match.player1Race);
       return (
         <div>
           <div className="row">
@@ -277,6 +300,7 @@ function GameView(props) {
         </div>
       );
     } else {
+      props.setColor(props.match.player2Race);
       return (
         <div>
           <div className="row">
@@ -389,17 +413,17 @@ function GameView(props) {
 function Notes(props) {
   return (
     <div className="Dummy">
-      <div className="NoteDummy">
-        Spieler {props.p}, hier könnte Ihre Notiz stehen für die {props.phase}
-        -Phase stehen!!!
-      </div>
       <Button
         className="ExitDummy"
         onClick={() => props.click(null)}
         variant="outline-danger"
       >
-        X
+        {"\u00d7"}
       </Button>
+      <div className="NoteDummy">
+        Spieler {props.p}, hier könnte Ihre Notiz stehen für die {props.phase}
+        -Phase stehen!!!
+      </div>
     </div>
   );
 }

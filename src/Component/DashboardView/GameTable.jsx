@@ -123,26 +123,47 @@ export default class GameTable extends React.Component {
 // The row data is composed into your custom expandable component via the data prop
 const ExpandableComponent = ({ data }) => (
   <div>
-    <div className="Table">
-      Game Info
-      <ul>
-        <li>Id: {data.id}</li>
-        <li>Turn: {data.turn}</li>
-        <li>Phase: {data.phase}</li>
-        <li>Date: {data.date}</li>
-      </ul>
-      Player Host: {data.player1}
-      <ul>
-        <li>Score: {data.player1Score}</li>
-        <li>CP: {data.player1CP}</li>
-        <li>Race: {data.player1Race}</li>
-      </ul>
-      Player Enemy: {data.player2}
-      <ul>
-        <li>Score: {data.player2Score}</li>
-        <li>CP: {data.player2CP}</li>
-        <li>Race: {data.player2Race}</li>
-      </ul>
+    <div className="Expand">
+      <h3>Game Info:</h3>
+      Game was started at <b>{data.date}</b>. It was the{" "}
+      <b> {data.turn}. Turn</b>
+      <br />
+      <br />
+      <div className="row">
+        <div className="colu-6 colu-s-6">
+          <h5>{data.player1}</h5>
+          <ul>
+            <li>
+              <b>Score: </b> {data.player1Score}
+            </li>
+            <li>
+              <b>CP: </b>
+              {data.player1CP}
+            </li>
+            <li>
+              <b>Race: </b>
+              {data.player1Race}
+            </li>
+          </ul>
+        </div>
+        <div className="colu-6 colu-s-6">
+          <h5>{data.player2}</h5>
+          <ul>
+            <li>
+              <b>Score: </b>
+              {data.player2Score}
+            </li>
+            <li>
+              <b>CP: </b>
+              {data.player2CP}
+            </li>
+            <li>
+              <b>Race: </b>
+              {data.player2Race}
+            </li>
+          </ul>
+        </div>
+      </div>
       {!data.state || data.state === 0 ? (
         <Link
           className="backToGame"
