@@ -44,11 +44,7 @@ const columns = [
     cell: (row) => (
       <div>
         <div>
-          {row.state === 0 ? (
-            <div styles={{ color: "red" }}>"Running" </div>
-          ) : (
-            <div styles={{ color: "green" }}>"Finished"</div>
-          )}
+          {row.player2}: {row.player2Race}
         </div>
         {row.summary}
       </div>
@@ -60,7 +56,11 @@ const columns = [
     sortable: true,
     cell: (row) => (
       <div>
-        {row.player1Score} vs {row.player2Score}
+        {row.state === 0 ? (
+          <div styles={{ color: "red" }}>"Running" </div>
+        ) : (
+          <div styles={{ color: "green" }}>"Finished"</div>
+        )}
       </div>
     ),
     right: true
