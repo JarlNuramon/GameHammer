@@ -44,11 +44,26 @@ const columns = [
     cell: (row) => (
       <div>
         <div>
-          {row.player2}: {row.player2Race}
+          {row.state === 0 ? (
+            <div styles={{ color: "red" }}>"Running" </div>
+          ) : (
+            <div styles={{ color: "green" }}>"Finished"</div>
+          )}
         </div>
         {row.summary}
       </div>
     )
+  },
+  {
+    name: "Status",
+    selector: "status",
+    sortable: true,
+    cell: (row) => (
+      <div>
+        {row.player1Score} vs {row.player2Score}
+      </div>
+    ),
+    right: true
   }
 ];
 
