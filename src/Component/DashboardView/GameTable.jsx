@@ -31,7 +31,8 @@ const columns = [
     cell: (row) => (
       <div>
         <div>
-          {row.player1}: {row.player1Race}
+          {row.player1}: {row.player1Race} (
+          {row.player1armyList ? row.player1armyList : "default"})
         </div>
         {row.summary}
       </div>
@@ -44,7 +45,8 @@ const columns = [
     cell: (row) => (
       <div>
         <div>
-          {row.player2}: {row.player2Race}
+          {row.player2}: {row.player2Race} (
+          {row.player2armyList ? row.player2armyList : "default"})
         </div>
         {row.summary}
       </div>
@@ -57,9 +59,9 @@ const columns = [
     cell: (row) => (
       <div>
         {row.state === 0 ? (
-          <div styles={{ color: "red" }}>"Running" </div>
+          <b style={{ color: "red" }}>Running </b>
         ) : (
-          <div styles={{ color: "green" }}>"Finished"</div>
+          <b style={{ color: "green" }}>Finished</b>
         )}
       </div>
     ),
@@ -156,8 +158,9 @@ const ExpandableComponent = ({ data }) => (
               {data.player1CP}
             </li>
             <li>
-              <b>Race: </b>
-              {data.player1Race}
+              <b>Army: </b>
+              {data.player1Race} (
+              {data.player1armyList ? data.player1armyList : "default"})
             </li>
           </ul>
         </div>
@@ -173,8 +176,9 @@ const ExpandableComponent = ({ data }) => (
               {data.player2CP}
             </li>
             <li>
-              <b>Race: </b>
-              {data.player2Race}
+              <b>Army: </b>
+              {data.player2Race} (
+              {data.player2armyList ? data.player2armyList : "default"})
             </li>
           </ul>
         </div>

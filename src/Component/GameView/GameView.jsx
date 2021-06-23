@@ -38,7 +38,7 @@ class GameContainer extends Component {
   };
   getMatch() {
     fetch(
-      "http://localhost:8080/api/v1/match/" +
+      "http://localhost:8080/api/v1/match/game/" +
         this.gid +
         "?apiToken=" +
         this.token,
@@ -48,14 +48,15 @@ class GameContainer extends Component {
       }
     )
       .then(function (response) {
-        console.log(response);
         if (response.ok) return response.json();
         alert("Token validation failed");
         throw "Token was not valid";
       })
       .then((json) => {
-        console.log(json);
-
+        if (!json.player1Note)
+          json.player1Note = "Player 1 doesnt have notes for this phase";
+        if (!json.player2Note)
+          json.player2Note = "Player 2 doesnt have notes for this phase";
         this.setState({ loading: false, match: json });
       })
       .catch((e) => {
@@ -132,6 +133,8 @@ function GameView(props) {
   const [wp1, setWp1] = useState(props.match.player1Score);
   const [wp2, setWp2] = useState(props.match.player2Score);
   const [end, setEnd] = useState(false);
+  const [note1, setNote1] = useState(props.match.player1Note);
+  const [note2, setNote2] = useState(props.match.player2Note);
   //methodes
   const postAdjust = () => {
     fetch(
@@ -187,12 +190,18 @@ function GameView(props) {
         method: "POST",
         mode: "cors"
       }
-    ).then(function (response) {
-      if (response.ok) {
+    )
+      .then(function (response) {
+        if (response.ok) return response.json();
+      })
+      .then((s) => {
         setTurn(getTurn + 1);
         setPhase(1);
-      }
-    });
+        if (s.player1Note) setNote1(s.player1Note);
+        else setNote1("Player 1 doesnt have notes for this phase");
+        if (s.player2Note) setNote2(s.player2Note);
+        else setNote2("Player 2 doesnt have notes for this phase");
+      });
   };
   const nextPhase = () => {
     return fetch(
@@ -206,11 +215,16 @@ function GameView(props) {
       }
     )
       .then(function (response) {
-        if (response.ok) return response;
+        if (response.ok) return response.json();
         // parses json
         else alert("Login failed");
       })
-      .then((myJson) => {
+      .then((s) => {
+        console.log("nextStep", s);
+        if (s.player1Note) setNote1(s.player1Note);
+        else setNote1("Player 1 doesnt have notes for this phase");
+        if (s.player2Note) setNote2(s.player2Note);
+        else setNote2("Player 2 doesnt have notes for this phase");
         if (getPhase === 14) nextTurn();
         else setPhase(getPhase + 1);
       })
@@ -404,7 +418,7 @@ function GameView(props) {
     return (
       <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
         {main()}
-        <Notes click={handleClick} phase={map[getPhase % 7]} p={p} />
+        <Notes click={handleClick} p={p} note1={note1} note2={note2} />
       </ReactCardFlip>
     );
   else return <Redirect to={{ pathname: "/dashboard/" + user }} />;
@@ -420,10 +434,12 @@ function Notes(props) {
       >
         {"\u00d7"}
       </Button>
-      <div className="NoteDummy">
-        Spieler {props.p}, hier könnte Ihre Notiz stehen für die {props.phase}
-        -Phase stehen!!!
-      </div>
+      <div
+        className="NoteDummy"
+        dangerouslySetInnerHTML={{
+          __html: props.p === 1 ? props.note1 : props.note2
+        }}
+      ></div>
     </div>
   );
 }

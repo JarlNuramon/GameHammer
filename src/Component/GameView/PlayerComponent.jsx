@@ -3,7 +3,6 @@ import Counters from "./Counter";
 import { Button } from "react-bootstrap";
 export default class PlayerComponent extends React.Component {
   render() {
-    console.log("Disabled in Player?: ", this.props.disable);
     return (
       <div className={"player " + this.props.side}>
         <div className={"player-name"}>
