@@ -51,7 +51,8 @@ const data = {
   Orks: ["Orks"],
   "T'au": ["T'au Empire"],
   Tyranids: ["Tyranids", "Genestealer Cult"],
-  Unaligned: ["Monsters & Gribbles"]
+  Unaligned: ["Monsters & Gribbles"],
+  Options: "Back to own list ->"
 };
 
 class StartGame extends Component {
@@ -59,7 +60,11 @@ class StartGame extends Component {
     player2: undefined,
     player2isValid: false,
     user1Race: undefined,
-    user2Race: undefined
+    user2Race: undefined,
+    data1: data,
+    data2: data,
+    player1CustomList: undefined,
+    player2CustomList: undefined
   };
 
   componentDidMount() {
@@ -76,14 +81,15 @@ class StartGame extends Component {
           throw "Token was not valid";
         })
         .then((name) => {
-          console.log(name);
-          if (name === this.id) this.setState({ loading: false });
-          else {
+          if (name !== this.id) {
             alert("You are not the user for this dashboard");
             console.log("pushed out");
             this.props.history.push("/dashboard/" + name);
             this.setState({ loading: false });
+            return;
           }
+          this.setState({ loading: false });
+          this.fetchPlayerList(this.id, 1);
         })
         .catch((e) => {
           console.log(e);
@@ -93,23 +99,57 @@ class StartGame extends Component {
   }
 
   handleChange = (e) => {
+    console.log("name: ", e.target.name, "value: ", e.target.value);
+    if (e.target.name.includes("1") && e.target.value.includes("own list ->"))
+      this.setState({ data1: this.state.player1CustomList });
+    else if (
+      e.target.name.includes("1") &&
+      e.target.value.includes("default list ->")
+    )
+      this.setState({ data1: data });
+    if (e.target.name.includes("2") && e.target.value.includes("own list ->"))
+      this.setState({ data2: this.state.player2CustomList });
+    else if (
+      e.target.name.includes("2") &&
+      e.target.value.includes("default list ->")
+    )
+      this.setState({ data2: data });
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    let user1Race = this.state.user1Race;
+    let user2Race = this.state.user2Race;
+    let user1Army = null;
+    let user2Army = null;
+    if (user1Race.includes(":: (")) {
+      let s = user1Race.split(":: (");
+      user1Army = s[0];
+      user1Race = s[1].substr(0, s[1].length - 1);
+    }
+    if (user2Race.includes(":: (")) {
+      let s = user2Race.split(":: (");
+      user2Army = s[0];
+      user2Race = s[1].substr(0, s[1].length - 1);
+    }
+    let body = JSON.stringify({
+      userIdPlayer1: this.id,
+      userIdPlayer2: this.state.player2,
+      user1Race: user1Race,
+      user2Race: user2Race,
+      user1Army: user1Army,
+      user2Army: user2Army
+    });
+    console.log(body);
     if (this.state.player2isValid)
       fetch(
         "http://localhost:8080/api/v1/match/start" +
           "?apiToken=" +
           cookie.load("token"),
         {
-          body: JSON.stringify({
-            userIdPlayer1: this.id,
-            userIdPlayer2: this.state.player2,
-            user1Race: this.state.user1Race,
-            user2Race: this.state.user2Race
-          }),
+          body: body,
           headers: {
             "content-type": "application/json"
           },
@@ -157,19 +197,53 @@ class StartGame extends Component {
       })
       .then((myJson) => {
         // use parseed result
-        this.setState({
-          player2isValid: myJson && this.state.player2 != this.id
-        });
+        if (myJson && this.state.player2 !== this.id) {
+          this.setState({
+            player2isValid: true
+          });
+          return this.state.player2;
+        }
+      })
+      .then((id) => {
+        if (id) this.fetchPlayerList(id, 2);
       })
       .catch(function (error) {
         console.error(error);
       });
   };
 
+  fetchPlayerList(userid, player) {
+    fetch(
+      "http://localhost:8080/api/v1/note/all/" +
+        userid +
+        "?apiToken=" +
+        cookie.load("token"),
+      {
+        method: "GET",
+        mode: "cors"
+      }
+    )
+      .then(function (response) {
+        // manipulate response object
+        // check status @ response.status etc.
+        return response.json(); // parses json
+      })
+      .then((json) => {
+        let userRace = json.map((e) => e.name + " :: (" + e.race + ")");
+        let userOption = {
+          Custom: userRace,
+          Option: "Back to default list ->"
+        };
+        if (player === 1)
+          this.setState({ data1: userOption, player1CustomList: userOption });
+        else if (player === 2)
+          this.setState({ data2: userOption, player2CustomList: userOption });
+      });
+  }
+
   render() {
     this.token = cookie.load("token");
     this.id = cookie.load("userIdentifier");
-
     return (
       <div>
         <Jumbotron>
@@ -181,7 +255,7 @@ class StartGame extends Component {
               <Form.Label>Select your Army </Form.Label>
               <NestedSelect
                 required={true}
-                data={data}
+                data={this.state.data1}
                 value={this.state.user1Race}
                 name="user1Race"
                 onChange={this.handleChange}
@@ -202,15 +276,24 @@ class StartGame extends Component {
               <Form.Control.Feedback type="invalid">
                 Enemy not valid
               </Form.Control.Feedback>
-              <Form.Label>Select your Enemys Army </Form.Label>
-              <NestedSelect
-                required={true}
-                data={data}
-                value={this.state.user2Race}
-                name="user2Race"
-                onChange={this.handleChange}
-              />
             </Form.Group>
+            {this.state.player2isValid ? (
+              <Form.Group controlId="formBasicUser2Select">
+                <Form.Label>Select your Enemys Army </Form.Label>
+                <NestedSelect
+                  required={true}
+                  data={this.state.data2}
+                  value={this.state.user2Race}
+                  name="user2Race"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            ) : (
+              <div>
+                <br />
+                <br />
+              </div>
+            )}
             <Button variant="primary" type="submit">
               Start
             </Button>
