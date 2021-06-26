@@ -128,9 +128,9 @@ export default class GameTable extends React.Component {
           data={this.state.data}
           expandableRows
           expandOnRowClicked
-          expandableRowsHideExpander
           expandableRowsComponent={<ExpandableComponent />}
           onRowClicked={this.rowClicked}
+          striped={true}
         />
       </div>
     );

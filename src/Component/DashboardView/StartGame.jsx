@@ -100,20 +100,26 @@ class StartGame extends Component {
 
   handleChange = (e) => {
     console.log("name: ", e.target.name, "value: ", e.target.value);
-    if (e.target.name.includes("1") && e.target.value.includes("own list ->"))
+    if (e.target.name.includes("1") && e.target.value.includes("own list ->")) {
       this.setState({ data1: this.state.player1CustomList });
-    else if (
+      document.getElementById("formBasicUser1")[0].selected = true
+    } else if (
       e.target.name.includes("1") &&
       e.target.value.includes("default list ->")
-    )
+    ) {
       this.setState({ data1: data });
-    if (e.target.name.includes("2") && e.target.value.includes("own list ->"))
+      document.getElementById("formBasicUser1")[0].selected = true
+    }
+    if (e.target.name.includes("2") && e.target.value.includes("own list ->")) {
       this.setState({ data2: this.state.player2CustomList });
-    else if (
+      document.getElementById("formBasicUser2Select")[0].selected = true
+    } else if (
       e.target.name.includes("2") &&
       e.target.value.includes("default list ->")
-    )
+    ) {
       this.setState({ data2: data });
+      document.getElementById("formBasicUser2Select")[0].selected = true
+    }
     this.setState({ [e.target.name]: e.target.value });
   };
 

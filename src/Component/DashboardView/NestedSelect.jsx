@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-export default class StartGame extends Component {
-  state = {
-    data: this.props.data,
-    name: this.props.name,
-    value: this.props.value,
-    onChange: this.props.onChange,
-    required: this.props.required ? this.props.required : false
-  };
 
+export default class StartGame extends Component {
   build = (arr) => {
     return Object.keys(arr).map((prop) =>
       arr[prop] instanceof Array ? (
@@ -23,7 +16,7 @@ export default class StartGame extends Component {
     return (
       <Form.Control
         as="select"
-        required={this.props.required}
+        required={this.props.required ? this.props.required : false}
         name={this.props.name}
         value={this.props.value}
         onChange={this.props.onChange}
