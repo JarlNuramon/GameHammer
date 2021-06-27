@@ -17,7 +17,9 @@
   background-position: 50% 45%;
   background-size: contain;
 }
-
+.green {
+  color: green;
+}
 .left .counter li {
   float: left;
 }

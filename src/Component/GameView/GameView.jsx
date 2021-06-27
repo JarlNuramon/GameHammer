@@ -9,6 +9,7 @@ import { Component, useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import { Button } from "react-bootstrap";
+import EndGame from "./EndGame";
 import themes from "../../themes";
 class GameContainer extends Component {
   state = {
@@ -360,34 +361,14 @@ function GameView(props) {
   function MainModified() {
     return (
       <div>
-        <div className="row">
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={1}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp1}
-              valueWP={wp1}
-              info={handleClick}
-              name={props.match.player1}
-              side="left"
-              disable={true}
-            />
-          </div>
-          <div className="colu-6 colu-s-6">
-            <PlayerComponent
-              nr={2}
-              cp={adjustCP}
-              wp={adjustWP}
-              valueCP={cp2}
-              valueWP={wp2}
-              info={handleClick}
-              name={props.match.player2}
-              side="right"
-              disable={true}
-            />
-          </div>
-        </div>
+        <EndGame
+          wp1={wp1}
+          wp2={wp2}
+          player1Name={props.match.player1}
+          player1Race={props.match.player1Race}
+          player2Name={props.match.player2}
+          player2Race={props.match.player2Race}
+        />
       </div>
     );
   }
